@@ -16,11 +16,15 @@ def parse_page(html: str, base_url: str) -> Tuple[list[str], Optional[str]]:
                 links.append(urljoin(base_url, href))
         # Next page (PAGINATION)
         next_node = tree.css_first("li.next a")
-        next_url = urljoin(base_url, next_node.attributes.get("href")) if next_node else None
+        if next_node:
+            href = next_node.attributes.get("href")
+            next_url = urljoin(base_url, href)
+        else:
+            next_url = None
         return links, next_url
     except Exception as th:
-        logger.warning(f"parse_page encountered an error while processing "
-                        f"{html}: {th}")
+        logger.warning(f"parse_page encountered an error while processing {html}: {th}")
+        return [], None
 
 
 def parse_book(book_html: str, base_url: str) -> dict:
@@ -31,7 +35,10 @@ def parse_book(book_html: str, base_url: str) -> dict:
     book_desc = desc_node.text().strip() if desc_node else None
     # category
     categ_crumbs = book_tree.css("ul.breadcrumb li a")
-    book_categ = categ_crumbs[-1].text() if categ_crumbs and len(categ_crumbs) >= 3 else None
+    if categ_crumbs and len(categ_crumbs) >= 3:
+        book_categ = categ_crumbs[-1].text()
+    else:
+        book_categ = None
     # price
     
     # def find_text(selector):
@@ -39,7 +46,13 @@ def parse_book(book_html: str, base_url: str) -> dict:
     # price_excl = find_text("th:contains('Price (excl. tax)') + td")
 
     # this is much safer
-    bk_table = {book_row.css_first("th").text(): book_row.css_first("td") for book_row in book_tree.css("table.table tr")}
+    bk_table = {}
+    for book_row in book_tree.css("table.table tr"):
+        th = book_row.css_first("th")
+        td = book_row.css_first("td")
+        key = th.text().strip() if th else ""
+        value = td.text().strip() if td else ""
+        bk_table[key] = value
     price_excl = float(bk_table.get("Price (excl. tax)", "").lstrip("£") or 0)
     price_incl = float(bk_table.get("Price (incl. tax)", "").lstrip("£") or 0)
     # availability
