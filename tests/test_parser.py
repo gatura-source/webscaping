@@ -12,3 +12,4 @@ def test_parse_book_sample():
     data = parse_book(sample_html, "https://books.toscrape.com/")
     assert data["name"] != ""
     assert "price_excl_vat" in data
+    print(data)

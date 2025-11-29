@@ -13,12 +13,12 @@ def parse_page(html: str, base_url: str) -> Tuple[list[str], Optional[str]]:
         for node in tree.css('article.product_pod h3 a'):
             href = node.attributes.get("href")
             if href:
-                links.append(urljoin(base_url, href))
+                links.append(urljoin(base_url, f"/catalogue/{href}"))
         # Next page (PAGINATION)
         next_node = tree.css_first("li.next a")
         if next_node:
             href = next_node.attributes.get("href")
-            next_url = urljoin(base_url, href)
+            next_url = urljoin(base_url,  f"/catalogue/{href}")
         else:
             next_url = None
         return links, next_url
@@ -63,13 +63,14 @@ def parse_book(book_html: str, base_url: str) -> dict:
     book_img = book_tree.css_first("div.carousel-inner img") or book_tree.css_first("div.item img") or book_tree.css_first("img")
     book_img_url = urljoin(base_url, book_img.attributes.get("src")) if book_img else None
     # rating
-    rating_node = book_tree.css_first("p.star_rating")
-    rating = 0
+    rating_node = book_tree.css_first("p.star-rating")  # Change: hyphen, not underscore
+    # rating = 0
     if rating_node:
         classes = rating_node.attributes.get("class", "")
         m = re.search(r"star-rating\s+(\w+)", classes)
         mapping = {"One": 1, "Two": 2, "Three": 3, "Four": 4, "Five": 5}
-        rating = mapping.get(m.group(1), 0) if m else 0
+        rating = mapping.get(str(m.group(1)), 0)
+       
     
     # dict
     return {
