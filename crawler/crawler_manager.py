@@ -18,7 +18,7 @@ class Crawler:
         self.semaphore = asyncio.Semaphore(appsettings.CRAWL_CONCURRENCY)
         self.visited: Set[str] = set()
 
-    async def _fetch_parse_book(self, client: httpx.AsynClient, url: str):
+    async def _fetch_parse_book(self, client: httpx.AsyncClient, url: str):
         async with self.semaphore:
             markup_text = await fetch_html(url, client)
         parsed = parse_book(markup_text, self.base_url)
@@ -87,7 +87,7 @@ class Crawler:
                 tasks = []
                 for link in links:
                     if link not in self.visited:
-                        tasks.append(self._fetch_and_parse_book(client, link))
+                        tasks.append(self._fetch_parse_book(client, link))
                 # run tasks concurrently
                 await asyncio.gather(*tasks)
                 if next_url:
