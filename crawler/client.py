@@ -7,7 +7,8 @@ from utils.logger import get_logger
 logger = get_logger("client")
 
 
-async def fetch_html(url: str, client: httpx.AsyncClient,  retries: int = None) -> str:
+async def fetch_html(url: str, client: httpx.AsyncClient,
+                     retries: int = None) -> str:
     retries = retries or appsettings.CRAWL_RETRY
     for attempt in range(1, retries + 1):
         try:
