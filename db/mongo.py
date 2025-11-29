@@ -10,5 +10,5 @@ changes_col = db["changes"]
 
 async def ensure_indexes():
     await books_col.create_index("source_url", unique=True)
-    await books_col.create_index([("category", 1) ("price_excl_vat", 1)])
+    await books_col.create_index([("category", 1), ("price_excl_vat", 1)])
     await changes_col.create_index("books_id")

@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     RATE_LIMIT_PER_HOUR: int = 100
     CRAWL_CONCURRENCY: int = 10
     CRAWL_RETRY: int = 3
+    CRAWL_TIMEOUT: int = 20
     SCHEDULER_ENABLED: bool = True
     
     class Config:
