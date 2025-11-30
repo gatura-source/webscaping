@@ -6,7 +6,6 @@ import redis.asyncio as redis
 
 api_key_header = APIKeyHeader(name="X-API-KEY", auto_error=False)
 
-# Redis client - initialize this in your app startup
 _redis_client = None
 
 async def init_redis():
@@ -86,7 +85,6 @@ async def check_api_key(request: Request):
     except Exception as e:
         # Log error but don't fail the request if Redis is down
         print(f"Redis error in rate limiting: {e}")
-        # Optionally: fail open or fail closed depending on your security requirements
         raise HTTPException(status_code=503, detail="Rate limiting service unavailable")
     
     return api_key
