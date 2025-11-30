@@ -335,13 +335,13 @@ MIT License.
 # Screenshots
 
 ### GET BOOKS
-![BOOKS](.screenshots/getbooks.png)
+![BOOKS](screenshots/getbooks.png)
 
 ### GET BOOK BY ID
-![BOOKBYID](.screenshots/getbookbyid.png)
+![BOOKBYID](screenshots/getbookbyid.png)
 
 ### TRIGGER CRAWL
-![CRAWL](.screenshots/triggercrawl.png)
+![CRAWL](screenshots/triggercrawl.png)
 
 ### CHANGES
-![CHANGES](.screenshots/changes.png)
+![CHANGES](screenshots/changes.png)
