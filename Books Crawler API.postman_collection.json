@@ -1,0 +1,136 @@
+{
+	"info": {
+		"_postman_id": "84405c12-d872-4ff0-9494-7eccfd53ebf1",
+		"name": "Books Crawler API",
+		"description": "Postman collection for the Books Web Crawler, Change Detector & FastAPI REST API.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "50460806",
+		"_collection_link": "https://bedanjedidiah-8992156.postman.co/workspace/Book-SCrapping~173329a9-c4cd-46dd-9891-96085d4fee59/collection/50460806-84405c12-d872-4ff0-9494-7eccfd53ebf1?action=share&source=collection_link&creator=50460806"
+	},
+	"item": [
+		{
+			"name": "Books",
+			"item": [
+				{
+					"name": "Get Books (simple)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-API-KEY",
+								"value": "{{API_KEY}}"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/books",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Book by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-API-KEY",
+								"value": "{{API_KEY}}"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/books/{{BOOK_ID}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"books",
+								"{{BOOK_ID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Crawl",
+			"item": [
+				{
+					"name": "Trigger Manual Crawl",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-API-KEY",
+								"value": "{{API_KEY}}"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/run-crawl",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"run-crawl"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Changes",
+			"item": [
+				{
+					"name": "Get Recent Changes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-API-KEY",
+								"value": "{{API_KEY}}"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/changes?limit=50",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"changes"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "50"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "http://localhost:8000"
+		},
+		{
+			"key": "API_KEY",
+			"value": "devkey123"
+		},
+		{
+			"key": "BOOK_ID",
+			"value": "6778802cb50b22092c56bb06"
+		}
+	]
+}
